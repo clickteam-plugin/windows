@@ -104,3 +104,5 @@ EXPORTS
 
 	SaveRunObject			@113
 	LoadRunObject			@114
+;	GetRunObjectMemoryUsage @115
+;	ChangeScale				@116

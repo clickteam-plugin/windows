@@ -10,10 +10,20 @@ class cSurface;
 class CTransition;
 class CDebugger;
 class CRunApp;
+#ifdef HWABETA
+class CEffectEx;
+class CPList;
+#endif
+class CPArray;
 #else
 #define cSurface void
 #define CTransition void
 #define CDebugger void
+#ifdef HWABETA
+#define CEffectEx void
+#define CPList void
+#endif
+#define CPArray void
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
@@ -88,6 +98,11 @@ typedef struct OI {
 	WORD			oiLoadCount;
 	WORD			oiCount;
 
+#ifdef HWABETA
+	LPBYTE			oiExtEffect;
+	CEffectEx*		oiExtEffectEx;	// Pour backdrops, faut trouver un système plus efficace (banque d'effets pour les backdrops)
+#endif // HWABETA
+
 #ifdef __cplusplus
 };
 #else
@@ -156,6 +171,16 @@ typedef struct RunFrameLayer
 	DWORD		nBkdLOs;		// Number of backdrop objects
 	DWORD		nFirstLOIndex;	// Index of first backdrop object in LO table
 
+	// EditFrameLayerEffect
+#ifdef HWABETA
+	DWORD		dwEffect;
+	LPARAM		dwEffectParam;	// CEffectEx si extended
+#endif // HWABETA
+
+	// LO index lists per zone
+	// /zone : offset 1st index, # indexes
+	CPArray*	m_loZones;
+
 	// Backup for restart
 	DWORD		backUp_dwOptions;
 	float		backUp_xCoef;
@@ -181,6 +206,9 @@ typedef struct objTransInfo {
 	int				m_ysave;
 	int				m_cxsave;
 	int				m_cysave;
+#ifdef HWABETA
+	BOOL			m_bStepDrawBlit;		// Use StepDrawBlit instead of StepDraw
+#endif
 
 } objTransInfo;
 typedef objTransInfo * LPOBJTRANSINFO;
@@ -191,6 +219,17 @@ typedef objTransInfo * LPOBJTRANSINFO;
 //
 
 #define	MAX_TEMPSTRING	16
+#define IPHONEOPT_JOYSTICK_FIRE1 0x0001
+#define IPHONEOPT_JOYSTICK_FIRE2 0x0002
+#define IPHONEOPT_JOYSTICK_LEFTHAND 0x0004
+#define	IPHONEFOPT_MULTITOUCH			0x0008
+#define	IPHONEFOPT_SCREENLOCKING		0x0010
+#define	IPHONEFOPT_IPHONEFRAMEIAD		0x0020
+#define JOYSTICK_NONE 0x0000
+#define JOYSTICK_TOUCH 0x0001
+#define JOYSTICK_ACCELEROMETER 0x0002
+#define JOYSTICK_EXT 0x0003
+
 
 #ifdef __cplusplus
 class CRunFrame {
@@ -265,7 +304,8 @@ typedef struct CRunFrame {
 
 	short			m_nConditions[NUMBEROF_SYSTEMTYPES+OBJ_LAST];
 	DWORD			m_free2[MAX_EVENTPROGRAMS];
-	DWORD			m_free4;
+	WORD			m_wJoystick;
+	WORD			m_wIPhoneOptions;
 	LPBYTE			m_swapBuffers;
 	DWORD			m_objectList;
 	LPBYTE			m_destroyList;
@@ -289,7 +329,7 @@ typedef struct CRunFrame {
 	LPTSTR			m_pTempString[MAX_TEMPSTRING];	// not used
 
 	// Other
-	cSurface*		m_pSaveSurface;
+	LPVOID			m_pfree;	// cSurface*		m_pSaveSurface;
 	int				m_leEditWinWidth;
 	int				m_leEditWinHeight;
 	DWORD			m_dwColMaskBits;
@@ -297,6 +337,34 @@ typedef struct CRunFrame {
 	WORD			m_wRandomSeed;
 	WORD			m_wFree;
 	DWORD			m_dwMvtTimerBase;
+
+#ifdef HWABETA
+	LPBYTE			m_pLayerEffects;
+
+	// Frame effect
+	FrameEffect*	m_pEffect;						// Frame effect (chunk data, contains effect index & param used in blit)
+	CEffectEx*		m_pEffectEx;					// Current effect
+	bool			m_bFrameEffectChanged;			// Frame effect has been modified
+	bool			m_bAlwaysUseSecondarySurface;	// This frame always use a secondary surface
+
+	// Secondary surface (render target used if background or frame effects)
+	cSurface*		m_pSecondarySurface;
+
+	// List of sub-app surfaces to refresh at the end in D3D full screen mode
+	CPList*			m_pSurfacedSubApps;
+
+	// Scale & angle
+	float			m_xScale;
+	float			m_yScale;
+	float			m_scale;		// not used for display
+	float			m_angle;
+
+	// Hotspot
+	POINT			m_hotSpot;
+
+	// Destination point
+	POINT			m_destPoint;
+#endif
 
 #ifdef __cplusplus
 };
@@ -529,6 +597,19 @@ typedef struct CRunApp {
 	// Code page
 	DWORD			m_dwCodePage;
 	bool			m_bUnicodeAppFile;
+
+	// Effects
+#ifdef HWABETA
+	LPBYTE			m_pEffects;							// effects used in the application
+	cSurface*		m_pOldSecondarySurface;				// secondary surface of the last frame, used in transitions
+	bool			m_bAlwaysUseSecondarySurface;		// at least one frame has a transition => always use a secondary surface in all the frames
+	bool			m_bShowWindowedMenu;				// to show menu after switch from full screen to windowed mode
+	int				m_nSubAppShowCount;					// to show the child window otherwise it's not displayed...
+#endif // HWABETA
+
+	// Character encoding
+	DWORD			m_charEncodingInput;
+	DWORD			m_charEncodingOutput;
 
 #ifdef __cplusplus
 };

@@ -15,314 +15,14 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Vitalize_Small|Win32"
-			OutputDirectory=".\Vitalize_Small"
-			IntermediateDirectory=".\Vitalize_Small"
+			Name="Debug Unicode|Win32"
+			OutputDirectory=".\Obj\Unicode\Debug"
+			IntermediateDirectory=".\Obj\Unicode\Debug"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\Vitalize_Small/Template.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;RUN_ONLY;VITALIZE"
-				StringPooling="true"
-				ExceptionHandling="1"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Vitalize_Small/Template.pch"
-				AssemblerListingLocation=".\Vitalize_Small/"
-				ObjectFile=".\Vitalize_Small/"
-				ProgramDataBaseFileName=".\Vitalize_Small/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY,VITALIZE"
-				Culture="1033"
-				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Vitalize_Small\Ext.res"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Vitalize_Small/Template.mox"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreAllDefaultLibraries="false"
-				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Vitalize_Small/Template.pdb"
-				OptimizeForWindows98="1"
-				ImportLibrary=".\Vitalize_Small/Template.lib"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\Vitalize_Small/Template.bsc"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Vitalize|Win32"
-			OutputDirectory=".\Vitalize"
-			IntermediateDirectory=".\Vitalize"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\Vitalize/Template.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;RUN_ONLY;VITALIZE"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\Vitalize/Template.pch"
-				AssemblerListingLocation=".\Vitalize/"
-				ObjectFile=".\Vitalize/"
-				ProgramDataBaseFileName=".\Vitalize/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY,VITALIZE"
-				Culture="1033"
-				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Vitalize\Ext.res"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Vitalize\Template.mox"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Vitalize/Template.pdb"
-				ImportLibrary=".\Vitalize/Template.lib"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\Vitalize/Template.bsc"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release_Small|Win32"
-			OutputDirectory=".\Release_Small"
-			IntermediateDirectory=".\Release_Small"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\Release_Small/Template.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT"
-				StringPooling="true"
-				ExceptionHandling="1"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release_Small/Template.pch"
-				AssemblerListingLocation=".\Release_Small/"
-				ObjectFile=".\Release_Small/"
-				ProgramDataBaseFileName=".\Release_Small/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG,EDITOR"
-				Culture="1033"
-				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Release_Small\Ext.res"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Release_Small/Template.mfx"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreAllDefaultLibraries="false"
-				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Release_Small/Template.pdb"
-				OptimizeForWindows98="1"
-				ImportLibrary=".\Release_Small/Template.lib"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\Release_Small/Template.bsc"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Copy file to installer directory"
-				CommandLine="copy $(TargetPath) .\ToInstall\Files\Extensions"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory=".\Debug"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -349,14 +49,15 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;STRICT"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;STRICT;UNICODE;_UNICODE;HWABETA"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				PrecompiledHeaderFile=".\Debug/Template.pch"
-				AssemblerListingLocation=".\Debug/"
-				ObjectFile=".\Debug/"
-				ProgramDataBaseFileName=".\Debug/"
+				TreatWChar_tAsBuiltInType="false"
+				PrecompiledHeaderFile="$(IntDir)\Template.pch"
+				AssemblerListingLocation="$(IntDir)\"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -369,21 +70,22 @@
 				PreprocessorDefinitions="_DEBUG,EDITOR"
 				Culture="1033"
 				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Debug\Ext.res"
+				ResourceOutputFileName="$(IntDir)\Ext.res"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Debug/Template.mfx"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib ..\..\lib\mmfs2.lib"
+				OutputFile="$(OutDir)\Template.mfx"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				GenerateManifest="false"
 				ModuleDefinitionFile=".\Ext.def"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/Template.pdb"
-				ImportLibrary=".\Debug/Template.lib"
+				ProgramDatabaseFile="$(IntDir)\Template.pdb"
+				ImportLibrary="$(IntDir)\Template.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -391,6 +93,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -414,13 +117,14 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\Release"
-			IntermediateDirectory=".\Release"
+			Name="Release Unicode|Win32"
+			OutputDirectory=".\Obj\Unicode\Release"
+			IntermediateDirectory=".\Obj\Unicode\Release"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -448,14 +152,15 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;UNICODE;_UNICODE;HWABETA"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\Release/Template.pch"
-				AssemblerListingLocation=".\Release/"
-				ObjectFile=".\Release/"
-				ProgramDataBaseFileName=".\Release/"
+				TreatWChar_tAsBuiltInType="false"
+				PrecompiledHeaderFile="$(IntDir)\Template.pch"
+				AssemblerListingLocation="$(IntDir)\"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -467,20 +172,21 @@
 				PreprocessorDefinitions="NDEBUG,EDITOR"
 				Culture="1033"
 				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Release\Ext.res"
+				ResourceOutputFileName="$(IntDir)\Ext.res"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Release/Template.mfx"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib ..\..\lib\mmfs2.lib"
+				OutputFile="$(OutDir)\Template.mfx"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				GenerateManifest="false"
 				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Release/Template.pdb"
-				ImportLibrary=".\Release/Template.lib"
+				ProgramDatabaseFile="$(IntDir)\Template.pdb"
+				ImportLibrary="$(IntDir)\Template.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -488,6 +194,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -509,17 +216,18 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copy file to installer directory"
-				CommandLine="copy $(TargetPath) .\ToInstall\Files\Extensions"
+				CommandLine="copy $(TargetPath) .\ToInstall\Files\Extensions\Unicode"
 			/>
 		</Configuration>
 		<Configuration
-			Name="Run_Only|Win32"
-			OutputDirectory=".\Run_Only"
-			IntermediateDirectory=".\Run_Only"
+			Name="Run_Only Unicode|Win32"
+			OutputDirectory=".\Obj\Unicode\Run_Only"
+			IntermediateDirectory=".\Obj\Unicode\Run_Only"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -547,14 +255,15 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;RUN_ONLY"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;UNICODE;_UNICODE;RUN_ONLY;HWABETA"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\Run_Only/Template.pch"
-				AssemblerListingLocation=".\Run_Only/"
-				ObjectFile=".\Run_Only/"
-				ProgramDataBaseFileName=".\Run_Only/"
+				TreatWChar_tAsBuiltInType="false"
+				PrecompiledHeaderFile="$(IntDir)\Template.pch"
+				AssemblerListingLocation="$(IntDir)\"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -566,20 +275,21 @@
 				PreprocessorDefinitions="NDEBUG,RUN_ONLY"
 				Culture="1033"
 				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Run_Only\Ext.res"
+				ResourceOutputFileName="$(IntDir)\Ext.res"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Run_Only/Template.mfx"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib ..\..\lib\mmfs2.lib"
+				OutputFile="$(OutDir)\Template.mfx"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				GenerateManifest="false"
 				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Run_Only/Template.pdb"
-				ImportLibrary=".\Run_Only/Template.lib"
+				ProgramDatabaseFile="$(IntDir)\Template.pdb"
+				ImportLibrary="$(IntDir)\Template.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -587,6 +297,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -608,110 +319,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copy extension to installer directory"
-				CommandLine="copy $(TargetPath) .\ToInstall\Files\Data\Runtime"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Run_Only_Small|Win32"
-			OutputDirectory=".\Run_Only_Small"
-			IntermediateDirectory=".\Run_Only_Small"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\Run_Only_Small/Template.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\Inc"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;STRICT;RUN_ONLY"
-				StringPooling="true"
-				ExceptionHandling="1"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Run_Only_Small/Template.pch"
-				AssemblerListingLocation=".\Run_Only_Small/"
-				ObjectFile=".\Run_Only_Small/"
-				ProgramDataBaseFileName=".\Run_Only_Small/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG,RUN_ONLY"
-				Culture="1033"
-				AdditionalIncludeDirectories="..\..\Inc"
-				ResourceOutputFileName=".\Run_Only_Small\Ext.res"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ..\..\lib\mmfs2.lib"
-				OutputFile=".\Run_Only_Small/Template.mfx"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreAllDefaultLibraries="false"
-				ModuleDefinitionFile=".\Ext.def"
-				ProgramDatabaseFile=".\Run_Only_Small/Template.pdb"
-				OptimizeForWindows98="1"
-				ImportLibrary=".\Run_Only_Small/Template.lib"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\Run_Only_Small/Template.bsc"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Copy file to installer directory"
-				CommandLine="copy $(TargetPath) .\ToInstall\Files\Data\Runtime"
+				CommandLine="copy $(TargetPath) .\ToInstall\Files\Data\Runtime\Unicode"
 			/>
 		</Configuration>
 	</Configurations>
@@ -726,7 +334,7 @@
 				RelativePath="Edittime.cpp"
 				>
 				<FileConfiguration
-					Name="Vitalize_Small|Win32"
+					Name="Debug Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -735,7 +343,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Vitalize|Win32"
+					Name="Release Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -744,43 +352,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release_Small|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only_Small|Win32"
+					Name="Run_Only Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -797,7 +369,7 @@
 				RelativePath="Ext.rc"
 				>
 				<FileConfiguration
-					Name="Vitalize_Small|Win32"
+					Name="Debug Unicode|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
@@ -806,7 +378,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Vitalize|Win32"
+					Name="Release Unicode|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
@@ -815,43 +387,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release_Small|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only_Small|Win32"
+					Name="Run_Only Unicode|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
@@ -864,7 +400,7 @@
 				RelativePath="General.cpp"
 				>
 				<FileConfiguration
-					Name="Vitalize_Small|Win32"
+					Name="Debug Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -873,7 +409,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Vitalize|Win32"
+					Name="Release Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -882,43 +418,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release_Small|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only_Small|Win32"
+					Name="Run_Only Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -931,7 +431,7 @@
 				RelativePath="Main.cpp"
 				>
 				<FileConfiguration
-					Name="Vitalize_Small|Win32"
+					Name="Debug Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -940,7 +440,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Vitalize|Win32"
+					Name="Release Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -949,43 +449,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release_Small|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only_Small|Win32"
+					Name="Run_Only Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -998,7 +462,7 @@
 				RelativePath="Runtime.cpp"
 				>
 				<FileConfiguration
-					Name="Vitalize_Small|Win32"
+					Name="Debug Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1007,7 +471,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Vitalize|Win32"
+					Name="Release Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1016,43 +480,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release_Small|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Run_Only_Small|Win32"
+					Name="Run_Only Unicode|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1097,8 +525,32 @@
 			Filter="txt"
 			>
 			<File
-				RelativePath="..\Help\CoxSdk.chm"
+				RelativePath="..\Help\ExtSdk.chm"
 				>
+				<FileConfiguration
+					Name="Debug Unicode|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Unicode|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Run_Only Unicode|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

@@ -479,7 +479,7 @@ LPWORD WINAPI DLLExport GetDebugTree(LPRDATA rdPtr)
 // -----------------
 // This routine returns the text of a given item.
 //
-void WINAPI DLLExport GetDebugItem(LPSTR pBuffer, LPRDATA rdPtr, int id)
+void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
 {
 #if !defined(RUN_ONLY)
 
@@ -501,9 +501,9 @@ void WINAPI DLLExport GetDebugItem(LPSTR pBuffer, LPRDATA rdPtr, int id)
 	case DB_CURRENTCHECK:
 		LoadString(hInstLib, IDS_CURRENTCHECK, temp, DB_BUFFERSIZE);
 		if (rdPtr->check)
-			wsprintf(pBuffer, temp, "TRUE");
+			wsprintf(pBuffer, temp, _T("TRUE"));
 		else
-			wsprintf(pBuffer, temp, "FALSE");
+			wsprintf(pBuffer, temp, _T("FALSE"));
 		break;
 	case DB_CURRENTCOMBO:
 		LoadString(hInstLib, IDS_CURRENTCOMBO, temp, DB_BUFFERSIZE);

@@ -78,7 +78,7 @@ typedef struct tagSetP
 // Info displayed in the object's About properties
 // Note: ObjComment is also displayed in the Quick Description box in the Insert Object dialog box
 //
-void WINAPI	DLLExport GetObjInfos (mv _far *mV, LPEDATA edPtr, LPSTR ObjName, LPSTR ObjAuthor, LPSTR ObjCopyright, LPSTR ObjComment, LPSTR ObjHttp)
+void WINAPI	DLLExport GetObjInfos (mv _far *mV, LPEDATA edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
 {
 #ifndef RUN_ONLY
 	// Name
@@ -103,7 +103,7 @@ void WINAPI	DLLExport GetObjInfos (mv _far *mV, LPEDATA edPtr, LPSTR ObjName, LP
 // -----------------
 // Returns the help filename of the object.
 //
-LPCSTR WINAPI GetHelpFileName()
+LPCTSTR WINAPI GetHelpFileName()
 {
 #ifndef RUN_ONLY
 	// Return a file without path if your help file can be loaded by the MMF help file.
@@ -111,7 +111,7 @@ LPCSTR WINAPI GetHelpFileName()
 
 	// Or return the path of your file, relatively to the MMF directory
 	// if your file is not loaded by the MMF help file.
-	return "Help\\MyExt.chm";
+	return _T("Help\\MyExt.chm");
 #else
 	return NULL;
 #endif // !defined(RUN_ONLY)
@@ -176,7 +176,7 @@ WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short Act
 // If you need to draw the icon manually, remove the comments around this function and in the .def file.
 //
 /*
-int WINAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPSTR lpName, fpObjInfo oiPtr, LPEDATA edPtr )
+int WINAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, LPEDATA edPtr )
 {
 	int error = -1;
 #ifndef RUN_ONLY
@@ -531,24 +531,24 @@ BOOL WINAPI GetFilters(LPMV mV, LPEDATA edPtr, DWORD dwFlags, LPVOID pReserved)
 // Triggers when a file is dropped onto the frame
 // Return TRUE if you can create an object from the given file
 //
-BOOL WINAPI	DLLExport UsesFile (LPMV mV, LPSTR fileName)
+BOOL WINAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
 {
 	BOOL r = FALSE;
 #ifndef RUN_ONLY
 
 	// Example: return TRUE if file extension is ".txt"
 /*	
-	LPSTR	ext, npath;
+	LPTSTR	ext, npath;
 
 	if ( fileName != NULL )
 	{
-		if ( (ext=(LPSTR)malloc(_MAX_EXT)) != NULL )
+		if ( (ext=(LPTSTR)calloc(_MAX_EXT, sizeof(TCHAR))) != NULL )
 		{
-			if ( (npath=(LPSTR)malloc(_MAX_PATH)) != NULL )
+			if ( (npath=(LPTSTR)calloc(_MAX_PATH, sizeof(TCHAR))) != NULL )
 			{
-				strcpy(npath, fileName);
-				_splitpath(npath, NULL, NULL, NULL, ext);
-				if ( _stricmp(ext, ".txt") == 0 )
+				_tcscpy(npath, fileName);
+				_tsplitpath(npath, NULL, NULL, NULL, ext);
+				if ( _tcsicmp(ext, _T(".txt")) == 0 )
 					r = TRUE;
 				free(npath);
 			}
@@ -565,7 +565,7 @@ BOOL WINAPI	DLLExport UsesFile (LPMV mV, LPSTR fileName)
 // --------------------
 // Creates a new object from file
 //
-void WINAPI	DLLExport CreateFromFile (LPMV mV, LPSTR fileName, LPEDATA edPtr)
+void WINAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, LPEDATA edPtr)
 {
 #ifndef RUN_ONLY
 	// Initialize your extension data from the given file
@@ -573,7 +573,7 @@ void WINAPI	DLLExport CreateFromFile (LPMV mV, LPSTR fileName, LPEDATA edPtr)
 //	edPtr->sheight = 32;
 
 	// Example: store the filename
-	// strcpy(edPtr->myFileName, fileName);
+	// _tcscpy(edPtr->myFileName, fileName);
 #endif // !defined(RUN_ONLY)
 }
 
@@ -666,7 +666,7 @@ LPVOID WINAPI DLLExport GetPropValue(LPMV mV, LPEDATA edPtr, UINT nPropID)
 //
 //	// Returns a string
 //	case PROPID_TEXT:
-//		return new CPropDataValue(&edPtr->szText[0]);
+//		return new CPropStringValue(&edPtr->szText[0]);
 //
 //	// Returns the value of the combo box
 //	case PROPID_COMBO:
@@ -725,29 +725,29 @@ void WINAPI DLLExport SetPropValue(LPMV mV, LPEDATA edPtr, UINT nPropID, LPVOID 
 //	case PROPID_TEXT:
 //		{
 //			// Gets the string
-//			LPSTR pStr = (LPSTR)((CPropDataValue*)pValue)->m_pData;
+//			LPTSTR pStr = (LPTSTR)((CPropStringValue*)pValue)->GetString();
 //
 //			// You can simply poke the string if your EDITDATA structure has a fixed size,
 //			// or have an adaptive size of structure like below
 //
 //			// If the length is different
-//			if (strlen(pStr)!=strlen(edPtr->text))
+//			if (_tcslen(pStr)!=_tcslen(edPtr->text))
 //			{
 //				// Asks MMF to reallocate the structure with the new size
-//				LPEDATA pNewPtr = (LPEDATA)mvReAllocEditData(mV, edPtr, sizeof(EDITDATA)+strlen(pStr));
+//				LPEDATA pNewPtr = (LPEDATA)mvReAllocEditData(mV, edPtr, sizeof(EDITDATA)+_tcslen(pStr) * sizeof(TCHAR));
 //				
 //				// If reallocation worked
 //				if (pNewPtr!=NULL)
 //				{
 //					// Copy the string
 //					edPtr=pNewPtr;
-//					strcpy(edPtr->text, pStr);
+//					_tcscpy(edPtr->text, pStr);
 //				}
 //			}
 //			else
 //			{	
 //				// Same size : simply copy
-//				strcpy(edPtr->text, pStr);
+//				_tcscpy(edPtr->text, pStr);
 //			}
 //		}
 //		break;
@@ -848,7 +848,7 @@ DWORD WINAPI DLLExport GetTextCaps(mv _far *mV, LPEDATA edPtr)
 // Return the font used the object.
 // Note: the pStyle and cbSize parameters are obsolete and passed for compatibility reasons only.
 //
-BOOL WINAPI DLLExport GetTextFont(mv _far *mV, LPEDATA edPtr, LPLOGFONT plf, LPSTR pStyle, UINT cbSize)
+BOOL WINAPI DLLExport GetTextFont(mv _far *mV, LPEDATA edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
 {
 #if !defined(RUN_ONLY)
 	// Example: copy LOGFONT structure from EDITDATA
@@ -864,7 +864,7 @@ BOOL WINAPI DLLExport GetTextFont(mv _far *mV, LPEDATA edPtr, LPLOGFONT plf, LPS
 // Change the font used the object.
 // Note: the pStyle parameter is obsolete and passed for compatibility reasons only.
 //
-BOOL WINAPI DLLExport SetTextFont(mv _far *mV, LPEDATA edPtr, LPLOGFONT plf, LPCSTR pStyle)
+BOOL WINAPI DLLExport SetTextFont(mv _far *mV, LPEDATA edPtr, LPLOGFONT plf, LPCTSTR pStyle)
 {
 #if !defined(RUN_ONLY)
 	// Example: copy LOGFONT structure to EDITDATA
@@ -971,13 +971,14 @@ void WINAPI DLLExport SetTextAlignment(mv _far *mV, LPEDATA edPtr, DWORD dwAlign
 #ifndef RUN_ONLY
 void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
 {
+#ifndef RUN_ONLY
 	int			n, id, nMn;
-	NPSTR		strBuf;
+	LPTSTR		strBuf;
 	HMENU		hSubMenu;
-
+	
 	nMn = GetMenuItemCount(hSourceMenu);
-	strBuf = (NPSTR)LocalAlloc(LPTR, 80);
-	for (n=0; n<nMn; n++)
+	strBuf = (LPTSTR)calloc(80, sizeof(TCHAR));
+	for (n = 0; n < nMn; n++)
 	{
 		if (0 == (id = GetMenuItemID(hSourceMenu, n)))
 			AppendMenu(hTargetMenu, MF_SEPARATOR, 0, 0L);
@@ -994,7 +995,8 @@ void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
 			}
 		}
 	}
-	LocalFree((HLOCAL)strBuf);
+	free(strBuf);
+#endif
 }
 
 // -----------------
@@ -1081,7 +1083,7 @@ HMENU WINAPI DLLExport GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, LPEDATA e
 //
 
 #ifndef RUN_ONLY
-void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPSTR strBuf, WORD maxLen)
+void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen)
 {
 	HMENU		hMn;
 
@@ -1107,15 +1109,15 @@ void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPSTR 
 #define GetCodeTitle(a,b,c,d,e,f)
 #endif // !defined(RUN_ONLY)
 
-void WINAPI DLLExport GetConditionTitle(mv _far *mV, short code, short param, LPSTR strBuf, short maxLen)
+void WINAPI DLLExport GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
 	GetCodeTitle((LPEVENTINFOS2)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
 }
-void WINAPI DLLExport GetActionTitle(mv _far *mV, short code, short param, LPSTR strBuf, short maxLen)
+void WINAPI DLLExport GetActionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
 	GetCodeTitle((LPEVENTINFOS2)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
 }
-void WINAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPSTR strBuf, short maxLen)
+void WINAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short maxLen)
 {
 	GetCodeTitle((LPEVENTINFOS2)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
 }
@@ -1212,7 +1214,7 @@ LPINFOEVENTSV2 WINAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
 // the string to use for displaying it under the event editor
 //
 
-void WINAPI DLLExport GetConditionString(mv _far *mV, short code, LPSTR strPtr, short maxLen)
+void WINAPI DLLExport GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUN_ONLY
 	// Check compatibility
@@ -1221,7 +1223,7 @@ void WINAPI DLLExport GetConditionString(mv _far *mV, short code, LPSTR strPtr, 
 #endif // !defined(RUN_ONLY)
 }
 
-void WINAPI DLLExport GetActionString(mv _far *mV, short code, LPSTR strPtr, short maxLen)
+void WINAPI DLLExport GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUN_ONLY
 	// Check compatibility
@@ -1230,7 +1232,7 @@ void WINAPI DLLExport GetActionString(mv _far *mV, short code, LPSTR strPtr, sho
 #endif // !defined(RUN_ONLY)
 }
 
-void WINAPI DLLExport GetExpressionString(mv _far *mV, short code, LPSTR strPtr, short maxLen)
+void WINAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUN_ONLY
 	// Check compatibility
@@ -1244,7 +1246,7 @@ void WINAPI DLLExport GetExpressionString(mv _far *mV, short code, LPSTR strPtr,
 // ----------------------------------------------------------
 // Returns the parameter name to display in the expression editor
 //
-void WINAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, LPSTR strBuf, short maxLen)
+void WINAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
 #if !defined(RUN_ONLY)
 	short		strID;
@@ -1275,8 +1277,8 @@ void WINAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
 #if !defined(RUN_ONLY)
 	// Example
 	// -------
-	// strcpy(&pExt->pextData[0], "Parameter Test");
-	// pExt->pextSize = sizeof(paramExt) + strlen(pExt->pextData)+1;
+	// _tcscpy(&pExt->pextData[0], _T("Parameter Test"));
+	// pExt->pextSize = sizeof(paramExt) + (_tcslen(pExt->pextData)+1)*sizeof(TCHAR);
 #endif // !defined(RUN_ONLY)
 }
 
@@ -1308,7 +1310,7 @@ BOOL CALLBACK DLLExport SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM
 			{
 			case IDOK:	// Exit
 				GetDlgItemText(hDlg, IDC_EDIT, pExt->pextData, 500);
-				pExt->pextSize=sizeof(paramExt)+strlen(pExt->pextData)+1;
+				pExt->pextSize=sizeof(paramExt)+(_tcslen(pExt->pextData)+1)*sizeof(TCHAR);
 				EndDialog(hDlg, TRUE);
 				return TRUE;
 
@@ -1346,7 +1348,7 @@ void WINAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 // --------------------
 // Initialize the parameter.
 //
-void WINAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPSTR pDest, short size)
+void WINAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
 {
 #if !defined(RUN_ONLY)
 

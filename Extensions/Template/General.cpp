@@ -102,6 +102,12 @@ extern "C"
 #endif
 			case KGI_BUILD:
 				return MINBUILD;					// Works with build MINBUILD or above
+			case KGI_UNICODE:
+				#ifdef _UNICODE
+					return TRUE;
+				#else
+					return FALSE;
+				#endif
 			default:
 				return 0;
 		}
@@ -150,12 +156,12 @@ short WINAPI DLLExport GetRunObjectInfos(mv _far *mV, fpKpxRunInfos infoPtr)
 // Data\Runtime folder).
 // 
 
-//LPCSTR szDep[] = {
-//	"MyDll.dll",
+//LPCTSTR szDep[] = {
+//	_T("MyDll.dll"),
 //	NULL
 //};
 
-LPCSTR* WINAPI DLLExport GetDependencies()
+LPCTSTR* WINAPI DLLExport GetDependencies()
 {
 	return NULL;	// szDep;
 }
@@ -203,7 +209,7 @@ HGLOBAL WINAPI DLLExport UpdateEditStructure(mv __far *mV, void __far * OldEdPtr
 //
 // Call lpfnUpdate to update your file pathname (refer to the documentation)
 // 
-void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPSTR appName, LPEDATA edPtr, void (WINAPI * lpfnUpdate)(LPSTR, LPSTR))
+void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPTSTR appName, LPEDATA edPtr, void (WINAPI * lpfnUpdate)(LPTSTR, LPTSTR))
 {
 }
 

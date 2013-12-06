@@ -17,7 +17,11 @@
 //#define PROEXT		// MMF Pro only
 
 // Build number of the minimum required version of MMF
+#ifdef _UNICODE
+#define	MINBUILD	249
+#else
 #define	MINBUILD	243
+#endif
 
 // General includes
 #include	"ccxhdr.h"

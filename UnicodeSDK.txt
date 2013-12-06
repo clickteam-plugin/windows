@@ -31,6 +31,10 @@ configs will be used to compile a non Unicode version for the normal version of 
 Note: the Unicode extensions have to be installed to the Extensions\Unicode and Data\Runtime\Unicode 
 folders of MMF2 Unicode.
 
+Note 2: if you use MSVC++ 2005 or above you have to set the "Threat wchar_t as Built-in Type" option 
+to "No" in the C++ / Language settings of the project otherwise you'll get link errors if you use functions 
+with text parameters in the DLL.
+
 
 What do the _UNICODE/UNICODE symbols do
 ---------------------------------------

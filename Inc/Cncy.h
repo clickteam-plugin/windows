@@ -231,8 +231,8 @@ typedef struct AppHeader {
 
 // Other flags
 #define		GAOF_DEBUGGERSHORTCUTS		0x0001
-#define		GAOF_DDRAW					0x0002
-#define		GAOF_DDRAWVRAM				0x0004
+//#define		GAOF_DDRAW					0x0002
+//#define		GAOF_DDRAWVRAM				0x0004
 #define		GAOF_OBSOLETE				0x0008
 #define		GAOF_AUTOIMGFLT				0x0010
 #define		GAOF_AUTOSNDFLT				0x0020
@@ -254,15 +254,45 @@ typedef struct AppHeader2 {
 	DWORD	dwBuildType;
 	DWORD	dwBuildFlags;
 	WORD	wScreenRatioTolerance;
-	WORD	wScreenAngle;			// 0 (no rotation), 1 (90 clockwise), 2 (90 anticlockwise)
-	DWORD	dwUnused2;
+	WORD	wScreenAngle;			// 0 (no rotation/portrait), 1 (90 clockwise/landscape left), 2 (90 anticlockwise/landscape right), 3 (automatic portrait), 4 (automatic landscape), 5 (fully automatic)
+	WORD	iPhoneDisplayOption;
+	WORD	wUnused;
 
 } AppHeader2;
 
-#define	AH2OPT_KEEPSCREENRATIO	0x0001
-#define	AH2OPT_FRAMETRANSITION	0x0002		// (HWA only) a frame has a transition 
-#define	AH2OPT_RESAMPLESTRETCH	0x0004		// (HWA only) "resample when resizing" (works with "resize to fill window" option)
-#define	AH2OPT_GLOBALREFRESH	0x0008		// (Mobile) force global refresh
+#define	AH2OPT_KEEPSCREENRATIO			0x0001
+#define	AH2OPT_FRAMETRANSITION			0x0002		// (HWA only) a frame has a transition 
+#define	AH2OPT_RESAMPLESTRETCH			0x0004		// (HWA only) "resample when resizing" (works with "resize to fill window" option)
+#define	AH2OPT_GLOBALREFRESH			0x0008		// (Mobile) force global refresh
+#define AH2OPT_MULTITASK				0x0010		// (iPhone) Multitask
+#define AH2OPT_RTL						0x0020		// (Unicode) Right-to-left reading
+#define AH2OPT_STATUSLINE				0x0040		// (iPhone/Android) Display status line
+#define AH2OPT_RTLLAYOUT				0x0080		// (Unicode) Right-to-left layout
+#define AH2OPT_ENABLEIAD				0x0100		// (iPhone) Enable iAd
+#define AH2OPT_IADBOTTOM				0x0200		// (iPhone) Display ad at bottom
+#define AH2OPT_AUTOEND					0x0400		// (Android)
+#define AH2OPT_DISABLEBACKBUTTON		0x0800		// (Android) Disable Back button behavior
+#define AH2OPT_ANTIALIASED				0x1000		// (iPhone) Smooth resizing on bigger screens
+#define AH2OPT_CRASHREPORTING			0x2000		// (Android) Enable online crash reporting
+#define AH2OPT_REQUIREGPU				0x4000		// (Android) Application requires a GPU
+#define	AH2OPT_KEEPRESOURCESBETWEENFRAMES	0x8000	// (HTML5) Keep resources between frames
+#define	AH2OPT_WEBGL					0x10000		// (HTML5) WebGL
+#define	AH2OPT_OPENGL1					0x10000		// (Android) Open GL 1.1
+#define	AH2OPT_RESERVED					0x20000		// (Android) for future use
+#define	AH2OPT_NOSCREENBORDERS			0x40000		// (Android) No screen borders when KeepScreenRatio is selected (note: will be implemented in other exporters later)
+#define AH2OPT_SYSTEMFONT				0x80000		// (Android) Use system font in text objects
+#define AH2OPT_RUNEVENIFNOTFOCUS		0x100000	// (HTML5) Run even if not focus
+#define AH2OPT_KEYBOVERAPPWINDOW		0x200000	// (Android) Display keyboard over app window
+#define AH2OPT_OUYA						0x400000	// (Android) OUYA application
+
+enum {
+	SCREENORIENTATION_PORTRAIT,
+	SCREENORIENTATION_LANDSCAPE_LEFT,
+	SCREENORIENTATION_LANDSCAPE_RIGHT,
+	SCREENORIENTATION_AUTO,
+	SCREENORIENTATION_LANDSCAPE_AUTO,
+	SCREENORIENTATION_PORTRAIT_AUTO,
+};
 
 #ifndef      _H2INC
 
@@ -281,17 +311,36 @@ enum {
 	BUILDTYPE_FLASH,
 	BUILDTYPE_JAVABLACKBERRY,
 	BUILDTYPE_ANDROID,
-	BUILDTYPE_MAX
+	BUILDTYPE_IPHONE,
+	BUILDTYPE_IPHONEDEVEL,
+	BUILDTYPE_IPHONEFINAL,
+	BUILDTYPE_XNA_WINDOWS_APP,
+	BUILDTYPE_MAC,
+	BUILDTYPE_XNA_WINDOWS,
+	BUILDTYPE_XNA_XBOX,
+	BUILDTYPE_XNA_PHONE,
+	BUILDTYPE_XNA_XBOX_APP,
+	BUILDTYPE_XNA_PHONE_APP,
+	BUILDTYPE_HTML5,
+	BUILDTYPE_VITA,
+	BUILDTYPE_VITADEVEL,
+	BUILDTYPE_VITAFINAL,		// no longer used
+	BUILDTYPE_HTML5DEVEL,
+	BUILDTYPE_HTML5FINAL,
+	BUILDTYPE_OUYA,
+	BUILDTYPE_MAX,			// end of standard build types
 };
 
 // Build flag values
-#define	BUILDFLAG_MAXCOMP			0x0001	// editor only
-#define BUILDFLAG_COMPSND			0x0002	// editor only
-#define BUILDFLAG_INCLUDEEXTFILES	0x0004	// editor only
-#define BUILDFLAG_MANUALIMGFILTERS	0x0008	// editor only
-#define BUILDFLAG_MANUALSNDFILTERS	0x0010	// editor only
-#define	BUILDFLAG_NOAUTOEXTRACT		0x0020	// editor only
-#define	BUILDFLAG_NOAPPLETCHECK		0x0040	// editor only
+#define	BUILDFLAG_MAXCOMP			0x0001
+#define BUILDFLAG_COMPSND			0x0002
+#define BUILDFLAG_INCLUDEEXTFILES	0x0004
+#define BUILDFLAG_MANUALIMGFILTERS	0x0008
+#define BUILDFLAG_MANUALSNDFILTERS	0x0010
+#define	BUILDFLAG_NOAUTOEXTRACT		0x0020
+#define	BUILDFLAG_NOAPPLETCHECK		0x0040
+#define	BUILDFLAG_TEST				0x0080
+#define	BUILDFLAG_NOWARNINGS		0x0100
 
 // Bluray options
 #define	BRFLAGS_DISPLAYLOADANIM		0x0001
@@ -421,6 +470,38 @@ typedef struct EditFrameLayerEffect {
 
 } EditFrameLayerEffect;
 
+// Effects
+#ifdef HWABETA
+
+typedef struct EffectHdr {
+	DWORD	dwEffectNameOffset;
+	DWORD	dwEffectDataOffset;
+	DWORD	dwEffectParamsOffset;
+	DWORD	dwOptions;
+} EffectHdr;
+
+#define EFFECTOPT_BKDTEXTUREMASK	0x000F
+
+typedef struct EffectParamsHdr {
+	DWORD	dwNParams;
+	DWORD	dwParamTypesOffset;
+	DWORD	dwParamNamesOffset;
+} EffectParamsHdr;
+
+typedef struct EffectRunData {
+
+	DWORD erdEffectIndex;
+	DWORD erdNParams;
+} EffectRunData;
+
+typedef struct FrameEffect {
+
+	DWORD	ffxInkEffect;
+	DWORD	ffxInkEffectParam;
+} FrameEffect;
+
+#endif
+
 //////////////////////////////////////////////////////////////////////////////
 // ObjInfo/FrameItem Header
 //
@@ -440,6 +521,8 @@ typedef struct ObjInfoHeader
 #define	OIF_DISCARDABLE	0x0002
 #define	OIF_GLOBAL		0x0004
 #define OIF_RESERVED_1	0x0008
+#define OIF_GLOBAL_EDITOR_NOSYNC	0x0010
+#define OIF_GLOBAL_EDITOR_FORCESYNC	0x0020
 
 //////////////////////////////////////////////////////////////////////////////
 // LevObj/FrameItemInstance
@@ -696,6 +779,7 @@ typedef	txString	*	fpts;
 
 #define	TSF_CORRECT		0x0100
 #define	TSF_RELIEF		0x0200
+#define TSF_RTL			0x0400
 
 ////////////////////////////////////////
 // Scores, lives, counters
@@ -886,6 +970,9 @@ typedef Transition_Data * LPTRANSITIONDATA;
 #define	TEXT_ALIGN_VCENTER	0x00000010
 #define	TEXT_ALIGN_BOTTOM	0x00000020
 
+// Right-to-left ordering
+#define	TEXT_RTL			0x00000100
+
 // Text caps
 #define	TEXT_FONT			0x00010000
 #define	TEXT_COLOR			0x00020000
@@ -990,7 +1077,8 @@ enum	{
 #define MMFVERFLAG_PLUGIN	0x00001000		// Plugin
 #define MMFVERSION_15		0x01050000		// MMF 1.5
 #define MMFVERSION_20		0x02000000		// MMF 2.0
-#define	MMF_CURRENTVERSION	MMFVERSION_20
+#define MMFVERSION_25		0x02050000		// MMF 2.5
+#define	MMF_CURRENTVERSION	MMFVERSION_25
 
 // Build numbers
 #define MMF_BUILD_NONAME			203
@@ -1039,8 +1127,17 @@ enum	{
 #define	MMF_BUILD_246_SP6			246
 #define	MMF_BUILD_247_SP7			247
 #define	MMF_BUILD_248_JAVA			248
-#define	MMF_BUILD_249_MOBILE		249
-#define	MMF_CURRENTBUILD			MMF_BUILD_249_MOBILE
+#define	MMF_BUILD_249_MOBILE_FLASH	249
+#define	MMF_BUILD_250				250
+#define	MMF_BUILD_251				251
+#define	MMF_BUILD_252				252
+#define	MMF_BUILD_253				253
+#define	MMF_BUILD_254				254
+#define	MMF_BUILD_255				255
+#define	MMF_BUILD_256				256
+#define	MMF_BUILD_257				257
+#define	MMF_BUILD_MMF25				280
+#define	MMF_CURRENTBUILD			MMF_BUILD_MMF25
 
 // MFA file format versions
 #define MFA_BUILD_ALTSTR			1						// Alterable strings
@@ -1048,7 +1145,8 @@ enum	{
 #define MFA_BUILD_LASTFRAMEOFFSET	3						// Additional frame offset
 #define MFA_BUILD_FIXQUALIF			4						// Fix in qualifiers + prd version
 #define MFA_BUILD_LANGID			5						// Language ID
-#define MFA_CURRENTBUILD			MFA_BUILD_LANGID
+#define MFA_BUILD_MMF25				6						// MMF 2.5
+#define MFA_CURRENTBUILD			MFA_BUILD_MMF25
 
 // Structures for picture editor
 typedef struct EditSurfaceParamsA {
@@ -1215,7 +1313,9 @@ typedef	struct	mv {
 	HHOOK				mvHMsgHook;
 	int					mvModalLoop;
 	int					mvModalSubAppCount;
-	LPVOID				mvFree[5];
+	UINT				mvLanguageID;
+	LPCWSTR				mvModuleTextsPathname;
+	LPVOID				mvFree[3];
 
 	// Functions
 	////////////
@@ -1369,6 +1469,8 @@ enum {
 	EF_ISUNICODEAPP,		// Returns TRUE if the application being loaded is a Unicode application
 	EF_GETAPPCODEPAGE,		// Returns the code page of the application
 	EF_CREATEIMAGEFROMFILEW,// Create image from file (runtime only)
+	EF_LOADTEXT,
+	EF_SAVETEXT,
 };
 
 // 3rd parameter of EF_CREATEIMAGEFROMFILE
@@ -1470,7 +1572,7 @@ __inline LPVOID mvGetNextItem(LPMV mV, LPVOID edPtr, LPVOID edPtr1, LPCSTR extNa
 
 #ifdef HWABETA
 
-__inline BOOL mvCreateEffect(LPMV mV, LPCSTR pEffectName, LPINT pEffect, LPARAM* pEffectParam) \
+__inline BOOL mvCreateEffect(LPMV mV, LPCTSTR pEffectName, LPINT pEffect, LPARAM* pEffectParam) \
 	{ return (BOOL)mV->mvCallFunction(NULL, EF_CREATEEFFECT, (LPARAM)pEffectName, (LPARAM)pEffect, (LPARAM)pEffectParam); }
 
 __inline void mvDeleteEffect(LPMV mV, int nEffect, LPARAM lEffectParam) \
@@ -1499,11 +1601,29 @@ __inline BOOL mvIsUnicodeApp(LPMV mV, LPVOID pApp) \
 __inline int mvGetAppCodePage(LPMV mV, LPVOID pApp) \
 	{ return mV->mvCallFunction(NULL, EF_GETAPPCODEPAGE, (LPARAM)pApp, (LPARAM)0, (LPARAM)0); }
 
+__inline LPWSTR mvLoadTextFile(LPMV mV, LPCWSTR fname, UINT encoding, BOOL bBinaryFile) \
+	{ return (LPWSTR)mV->mvCallFunction(NULL, EF_LOADTEXT, (LPARAM)fname, (LPARAM)encoding, (LPARAM)bBinaryFile); }
+
+__inline int mvSaveTextFile(LPMV mV, LPCWSTR fname, LPCWSTR text, UINT encoding) \
+	{ return (int)mV->mvCallFunction(NULL, EF_SAVETEXT, (LPARAM)fname, (LPARAM)text, (LPARAM)encoding); }
+
 #ifdef _UNICODE
 #define mvCreateImageFromFile	mvCreateImageFromFileW
 #else
 #define mvCreateImageFromFile	mvCreateImageFromFileA
 #endif
+
+enum {
+	CHARENC_ANSI,
+	CHARENC_UTF8_W_BOM,
+	CHARENC_UTF8_WO_BOM,
+	CHARENC_UTF16_W_BOM,
+	CHARENC_UTF16_WO_BOM,
+	CHARENC_UTF16B_W_BOM,
+	CHARENC_UTF16B_WO_BOM,
+	CHARENC_MAX,
+};
+#define CHARENC_DEFAULT ((UINT)-1)
 
 #endif // __cplusplus
 
@@ -1548,6 +1668,7 @@ typedef	struct	MvxFnc {
 	LPTSTR				mvxFileTitle;
 
 	CMvt* ( CALLBACK	* mvxCreateMvt) (DWORD);
+	void ( CALLBACK		* mvxGetMvtName)(int nMvt, LPTSTR pName, int cbSize);
 
 	#if defined(VITALIZE)
 		BOOL				bValidated;

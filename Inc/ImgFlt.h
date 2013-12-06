@@ -1,17 +1,12 @@
 #ifndef ImgFltMMf_h
 #define ImgFltMMf_h
 
-//#define STDDLL_IMPORTS
-//#include "\cfc\v4\Std\CFCString.h"
-
 // Image filters
 #define IMPORT_IMAGE_USESURFACEDEPTH		0x0001
 #define IMPORT_IMAGE_USESURFACEPALETTE		0x0002
 
-#ifdef _UNICODE		// works only in Unicode version, those options are not implemented in the normal version yet
 #define IMPORT_IMAGE_FIRSTPIXELTRANSP		0x0004
 #define IMPORT_IMAGE_OPAQUE					0x0008
-#endif
 
 DLLExport32 BOOL WINAPI ImportImageA(CImageFilterMgr* pImgMgr, LPCSTR fileName, cSurface* psf, LPDWORD pDWFilterID, DWORD dwFlags);
 DLLExport32 BOOL WINAPI ImportImageFromInputFile(CImageFilterMgr* pImgMgr, CInputFile* pf, cSurface* psf, LPDWORD pDWFilterID, DWORD dwFlags);
