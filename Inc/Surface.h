@@ -275,15 +275,31 @@ class SURFACES_API cSurface
 		// ======================
 		// LoadImage (DIB format) / SaveImage (DIB format)
 		// ======================
-		BOOL	LoadImage (HFILE hf, DWORD lsize, LIFlags loadFlags = LI_NONE);
-		BOOL	LoadImage (LPCSTR fileName, LIFlags loadFlags = LI_NONE);
+		#undef LoadImage
+
+		BOOL	LoadImageA (HFILE hf, DWORD lsize, LIFlags loadFlags = LI_NONE);
+		BOOL	LoadImageA (LPCSTR fileName, LIFlags loadFlags = LI_NONE);
 #ifdef _WINDOWS
-		BOOL	LoadImage (HINSTANCE hInst, int bmpID, LIFlags loadFlags = LI_NONE);
+		BOOL	LoadImageA (HINSTANCE hInst, int bmpID, LIFlags loadFlags = LI_NONE);
 #endif // _WINDOWS
-		BOOL	LoadImage (LPBITMAPINFO pBmi, LPBYTE pBits = NULL, LIFlags loadFlags = LI_NONE);
+		BOOL	LoadImageA (LPBITMAPINFO pBmi, LPBYTE pBits = NULL, LIFlags loadFlags = LI_NONE);
+
+		BOOL	LoadImageW (HFILE hf, DWORD lsize, LIFlags loadFlags = LI_NONE);
+		BOOL	LoadImageW (LPCWSTR fileName, LIFlags loadFlags = LI_NONE);
+#ifdef _WINDOWS
+		BOOL	LoadImageW (HINSTANCE hInst, int bmpID, LIFlags loadFlags = LI_NONE);
+#endif // _WINDOWS
+		BOOL	LoadImageW (LPBITMAPINFO pBmi, LPBYTE pBits = NULL, LIFlags loadFlags = LI_NONE);
+
+		#ifdef _UNICODE
+		#define LoadImage LoadImageW
+		#else
+		#define LoadImage LoadImageA
+		#endif
 
 		BOOL	SaveImage (HFILE hf, SIFlags saveFlags = SI_NONE);
 		BOOL	SaveImage (LPCSTR fileName, SIFlags saveFlags = SI_NONE);
+		BOOL	SaveImage (LPCWSTR fileName, SIFlags saveFlags = SI_NONE);
 		BOOL	SaveImage (LPBITMAPINFO pBmi, LPBYTE pBits, SIFlags saveFlags = SI_NONE);
 
 		DWORD	GetDIBSize ();
@@ -408,12 +424,12 @@ class SURFACES_API cSurface
 		BOOL	Rectangle(int left, int top, int right, int bottom, int thickness = 1, COLORREF crOutl = BLACK);
 
 		BOOL	Rectangle(int left, int top, int right, int bottom, COLORREF crFill, int thickness /*= 0*/, 
-			COLORREF crOutl /*= BLACK*/, BOOL Fill = TRUE);
+			COLORREF crOutl /*= BLACK*/, BOOL bFill = TRUE);
 
 		BOOL	Polygon(LPPOINT pts, int nPts, int thickness = 1, COLORREF crOutl = BLACK);
 
 		BOOL	Polygon(LPPOINT pts, int nPts, COLORREF crFill, int thickness = 0, 
-			COLORREF crOutl = BLACK, BOOL Fill = TRUE);
+			COLORREF crOutl = BLACK, BOOL bFill = TRUE);
 
 		BOOL  Line(int x1, int y1, int x2, int y2, int thickness = 1, COLORREF crOutl = BLACK); 
 
@@ -475,10 +491,30 @@ class SURFACES_API cSurface
 		// ======================
 		// Text
 		// ======================
-		// TextOut
-		int		TextOut(LPCSTR text, DWORD dwCharCount,int x,int y,DWORD alignMode,LPRECT pClipRc, COLORREF color=0, HFONT hFnt=(HFONT)NULL, BlitMode bm=BMODE_TRANSP, BlitOp=BOP_COPY, LPARAM param=0, int AntiA=0);
-		int		DrawText(LPCSTR text, DWORD dwCharCount,LPRECT pRc, DWORD dtflags, COLORREF color=0, HFONT hFnt=(HFONT)NULL,
+
+#undef TextOut
+
+		int		TextOutA(LPCSTR text, DWORD dwCharCount,int x,int y,DWORD alignMode,LPRECT pClipRc, COLORREF color=0, HFONT hFnt=(HFONT)NULL, BlitMode bm=BMODE_TRANSP, BlitOp=BOP_COPY, LPARAM param=0, int AntiA=0);
+		int		TextOutW(LPCWSTR text, DWORD dwCharCount,int x,int y,DWORD alignMode,LPRECT pClipRc, COLORREF color=0, HFONT hFnt=(HFONT)NULL, BlitMode bm=BMODE_TRANSP, BlitOp=BOP_COPY, LPARAM param=0, int AntiA=0);
+
+#ifdef _UNICODE
+#define TextOut TextOutW
+#else
+#define TextOut TextOutA
+#endif
+
+#undef DrawText
+
+		int		DrawTextA(LPCSTR text, DWORD dwCharCount,LPRECT pRc, DWORD dtflags, COLORREF color=0, HFONT hFnt=(HFONT)NULL,
 						  BlitMode bm=BMODE_TRANSP, BlitOp bo=BOP_COPY, LPARAM param=0, int AntiA=0,DWORD dwLeftMargin=0,DWORD dwRightMargin=0,DWORD dwTabSize=8);
+		int		DrawTextW(LPCWSTR text, DWORD dwCharCount,LPRECT pRc, DWORD dtflags, COLORREF color=0, HFONT hFnt=(HFONT)NULL,
+						  BlitMode bm=BMODE_TRANSP, BlitOp bo=BOP_COPY, LPARAM param=0, int AntiA=0,DWORD dwLeftMargin=0,DWORD dwRightMargin=0,DWORD dwTabSize=8);
+
+#ifdef _UNICODE
+#define DrawText DrawTextW
+#else
+#define DrawText DrawTextA
+#endif
 
 		// ======================
 		// Color / Palette functions

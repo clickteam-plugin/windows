@@ -29,6 +29,7 @@ enum {
 	KGI_ATX_CONTROL,					// Not used
 	KGI_PRODUCT,						// Minimum product the extension is compatible with
 	KGI_BUILD,							// Minimum build the extension is compatible with
+	KGI_UNICODE,						// Returns TRUE if the extension is in Unicode
 };
 
 #define	EXT_VERSION1			0x200	// C&C, TGF
@@ -63,6 +64,11 @@ enum {
 #define	KPX_POP_LAST			2399		// End of user entries
 
 #define	EXTAPI	WINAPI __declspec(dllexport)
+
+// Return codes
+#define	CREATE_OBJECT_OK	0
+#define	CREATE_OBJECT_ERROR	(-1)
+
 
 #endif // ccx_h
 

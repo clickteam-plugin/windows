@@ -26,7 +26,7 @@ typedef struct CValue {
 	{
 		long m_long;
 		double m_double;
-		LPSTR m_pString;
+		LPTSTR m_pString;
 	};
 #ifdef __cplusplus
 };
@@ -84,7 +84,7 @@ typedef short HFII;
 
 // LOGFONT 16 structure for compatibility with old extensions
 /////////////////////////////////////////////////////////////
-typedef struct tagLOGFONTV1 {
+typedef struct tagLOGFONTV1A {
 	short	lfHeight;
 	short	lfWidth;
 	short	lfEscapement;
@@ -98,8 +98,29 @@ typedef struct tagLOGFONTV1 {
 	BYTE	lfClipPrecision;
 	BYTE	lfQuality;
 	BYTE	lfPitchAndFamily;
-	BYTE	lfFaceName[LF_FACESIZE];
-} LOGFONTV1;
+	char	lfFaceName[LF_FACESIZE];
+} LOGFONTV1A;
+typedef struct tagLOGFONTV1W {
+	short	lfHeight;
+	short	lfWidth;
+	short	lfEscapement;
+	short	lfOrientation;
+	short	lfWeight;
+	BYTE	lfItalic;
+	BYTE	lfUnderline;
+	BYTE	lfStrikeOut;
+	BYTE	lfCharSet;
+	BYTE	lfOutPrecision;
+	BYTE	lfClipPrecision;
+	BYTE	lfQuality;
+	BYTE	lfPitchAndFamily;
+	WCHAR	lfFaceName[LF_FACESIZE];
+} LOGFONTV1W;
+#ifdef _UNICODE
+#define LOGFONTV1 LOGFONTV1W
+#else
+#define LOGFONTV1 LOGFONTV1A
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -158,13 +179,22 @@ typedef struct
 } OCValues;
 typedef	OCValues*			LPOCVALUES;
 
+#ifdef _UNICODE
+typedef struct
+{
+	WORD	number;
+	TCHAR	str[1];
+} OCStringsW;
+typedef	OCStringsW*			LPOCSTRINGS;
+#else
 typedef struct
 {
 	WORD	number;
 	char	str[2];
+} OCStringsA;
+typedef	OCStringsA*			LPOCSTRINGS;
+#endif
 
-} OCStrings;
-typedef	OCStrings*			LPOCSTRINGS;
 
 
 typedef struct
@@ -185,25 +215,6 @@ typedef	OCValueNames*		LPOCVALUENAMES;
 #define	OCFLAGS2_OBSTACLE_PLATFORM	0x0020
 #define	OCFLAGS2_OBSTACLE_LADDER	0x0030
 #define	OCFLAGS2_AUTOMATICROTATION	0x0040
-
-
-//////////////////////////////////////////////////////////////////////////////
-//
-// Values
-//
-#define		MAX_VALUES			1024
-#define		VALUENAME_LENGTH	20
-typedef struct tabVAL {
-	long	vValue;
-	char	vName[VALUENAME_LENGTH];
-	} oValue;
-typedef struct tagVALUES {
-	short	vaSize;
-	DWORD	vaFlags;			// Flags of the object
-	oValue	vaValues[3];		// valurs
-	char	vaString[2];		// Character string
-	} objectValues;
-typedef	objectValues *		fpValues;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -818,6 +829,7 @@ typedef	eventInfosOffsets *		LPEVO;
 #define		OEPREFS_INKEFFECTS				0x0100
 #define		OEPREFS_TRANSITIONS				0x0200
 #define		OEPREFS_FINECOLLISIONS			0x0400
+#define		OEPREFS_APPLETPROBLEMS			0x0800
 
 // Running flags
 #define		REFLAG_ONESHOT				0x0001
@@ -1042,6 +1054,10 @@ typedef	eventInfosOffsets *		LPEVO;
 #define EXP_GETCLIPBOARD	((55<<8)|255)
 #define	EXP_TEMPPATH		((56<<8)|255)
 #define EXP_BINFILETEMPNAME	((57<<8)|255)
+#define	EXP_FLOATSTR		((58<<8)|255)
+#define	EXPL_FLOATSTR		((58<<16)|65535)
+#define	EXP_ATAN2			((59<<8)|255)
+#define	EXPL_ATAN2			((59<<16)|65535)
 
 #define	EXP_PARENTH1		((-1<<8)|255)
 #define	EXPL_PARENTH1		((-1<<16)|65535)
@@ -1096,7 +1112,9 @@ typedef	eventInfosOffsets *		LPEVO;
 #define ACT_PLAYMUSICFILE		((26<<8)|254)
 #define ACT_PLAYLOOPMUSICFILE	((27<<8)|254)
 #define ACT_PLAYFILECHANNEL		((28<<8)|254)
-#define ACT_PLAYLOOPFILECHANNEL	((29<<8)|254)
+#define	ACTL_PLAYFILECHANNEL	((28<<16)|65534)
+#define ACT_PLAYLOOPFILECHANNEL		((29<<8)|254)
+#define ACTL_PLAYLOOPFILECHANNEL	((29<<16)|65534)
 #define ACT_LOCKCHANNEL			((30<<8)|254)
 #define ACT_UNLOCKCHANNEL		((31<<8)|254)
 #define ACT_SETCHANNELFREQ		((32<<8)|254)
@@ -1121,6 +1139,7 @@ typedef	eventInfosOffsets *		LPEVO;
 //#define		TYPE_GAME		  		-3
 //(TYPE_GAME&255)=253
 
+#define CND_FRAMESAVED		((-10<<8)|253)
 #define CND_FRAMELOADED		((-9<<8)|253)
 #define	CNDL_ENDOFPAUSE		((-8<<16)|65533)
 #define CND_ENDOFPAUSE		((-8<<8)|253)
@@ -1172,6 +1191,11 @@ typedef	eventInfosOffsets *		LPEVO;
 #define ACT_LOADFRAME		((29<<8)|253)
 #define ACT_LOADAPPLICATION	((30<<8)|253)
 #define ACT_PLAYDEMO		((31<<8)|253)
+#define ACT_SETFRAMEEFFECT	((32<<8)|253)
+#define ACT_SETFRAMEEFFECTPARAM	((33<<8)|253)
+#define ACT_SETFRAMEEFFECTPARAMTEXTURE	((34<<8)|253)
+#define ACT_SETFRAMEALPHACOEF	((35<<8)|253)
+#define ACT_SETFRAMERGBCOEF	((36<<8)|253)
 
 #define	EXP_GAMLEVEL		((0<<8)|253)
 #define	EXP_GAMNPLAYER		((1<<8)|253)
@@ -1187,6 +1211,12 @@ typedef	eventInfosOffsets *		LPEVO;
 #define EXP_GETVIRTUALWIDTH	((11<<8)|253)
 #define EXP_GETVIRTUALHEIGHT ((12<<8)|253)
 #define EXP_GETFRAMEBKDCOLOR ((13<<8)|253)
+#define	EXP_GRAPHICMODE		((14<<8)|253)
+#define	EXP_PIXELSHADERVERSION ((15<<8)|253)
+#define EXP_FRAMEALPHACOEF	((16<<8)|253)
+#define EXP_FRAMERGBCOEF	((17<<8)|253)
+#define EXP_FRAMEEFFECTPARAM	((18<<8)|253)
+
 
 // TIMER Conditions / Actions 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1379,9 +1409,28 @@ typedef struct tagMD {
 	short	mdSinus;
 	short	mdLength;
 	short	mdPause;
-	char	mdName[2];
+	TCHAR	mdName[2];
 	} MoveDef;
 typedef	MoveDef	* LPMOVEDEF;
+
+// Movement edition
+typedef struct tagME {
+	int		meSpeed;
+	int		meDx;
+	int		meDy;
+	int		meFlag;
+	int		meX;
+	int		meY;
+	int		meDelay;
+	LPTSTR	meName;
+	} MoveEdit;
+typedef	MoveEdit * LPMOVEEDIT;
+
+typedef struct tagMA {
+	MoveEdit	me[1];
+	}MoveArray;
+#define	sizeof_MoveArray		(sizeof(MoveArray)-sizeof(MoveEdit))
+typedef	MoveArray * LPMOVEARRAY;
 
 typedef struct tagMT {
 	WORD	mtNumber;				// Number of movement 
@@ -1394,32 +1443,6 @@ typedef struct tagMT {
 	BYTE	mtMoves[2];				// Start of movement definition
 	} MoveTaped;
 typedef	MoveTaped	* LPMOVETAPED;
-
-// Movement edition
-typedef struct tagME {
-	int		meSpeed;
-	int		meDx;
-	int		meDy;
-	int		meFlag;
-	int		meX;
-	int		meY;
-	int		meDelay;
-	char	*meName;
-	} MoveEdit;
-typedef	MoveEdit * LPMOVEEDIT;
-
-typedef struct tagMA {
-	MoveEdit	me[1];
-	}MoveArray;
-#define	sizeof_MoveArray		(sizeof(MoveArray)-sizeof(MoveEdit))
-typedef	MoveArray * LPMOVEARRAY;
-
-// Bloc movement structure
-typedef struct tagMBLOC {
-	short		pbNMoves;
-	short		pbData[2];
-	} PathBloc;
-typedef PathBloc  *  LPPATHBLOC;
 
 // PLATFORM mouvement 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1465,7 +1488,7 @@ typedef struct 	tagMV {
 	WORD	mvControl;				// Who controls the object
 	WORD	mvType;					// Type of movement
 	BYTE	mvMove;					// Move at start?
-	BYTE	mvFree0;
+	BYTE	mvFree0;		
 	BYTE	mvFree1;
 	BYTE	mvFree2;
 	DWORD	mvDirAtStart;
@@ -1564,6 +1587,7 @@ typedef	Movement	*	LPMOVEMENT;
 #define	ACT_EXTFORCEANIM	        (17<<8)
 #define	ACT_EXTFORCEDIR		        (18<<8)
 #define	ACT_EXTFORCESPEED	        (19<<8)
+#define	ACTL_EXTFORCESPEED	        (19<<16)
 #define	ACT_EXTRESTANIM		        (20<<8)         
 #define	ACT_EXTRESTDIR		        (21<<8)
 #define	ACT_EXTRESTSPEED	        (22<<8)
@@ -1615,6 +1639,11 @@ typedef	Movement	*	LPMOVEMENT;
 #define	ACT_EXTMOVEAFTER			(60<<8)
 #define ACT_EXTMOVETOLAYER			(61<<8)
 #define ACT_EXTADDTODEBUGGER		(62<<8)
+#define ACT_EXTSETEFFECT			(63<<8)
+#define ACT_EXTSETEFFECTPARAM		(64<<8)
+#define ACT_EXTSETALPHACOEF			(65<<8)
+#define ACT_EXTSETRGBCOEF			(66<<8)
+#define ACT_EXTSETEFFECTPARAMTEXTURE (67<<8)
 
 #define	EXP_EXTYSPR        		    ( 1<<8)
 #define	EXP_EXTISPR        		    ( 2<<8)
@@ -1644,6 +1673,11 @@ typedef	Movement	*	LPMOVEMENT;
 #define EXP_EXTGETGRAVITY			(24<<8)
 #define EXP_EXTXAP					(25<<8)
 #define EXP_EXTYAP					(26<<8)
+#define EXP_EXTALPHACOEF			(27<<8)
+#define EXP_EXTRGBCOEF				(28<<8)
+#define EXP_EXTEFFECTPARAM			(29<<8)
+#define EXP_EXTVARBYINDEX			(30<<8)
+#define EXP_EXTVARSTRINGBYINDEX		(31<<8)
 
 // TEXT Conditions / Actions 
 ////////////////////////////////////////////
@@ -1675,6 +1709,7 @@ typedef	Movement	*	LPMOVEMENT;
 #define ACT_SPRSETSCALEY	(((EVENTS_EXTBASE+7)<<8)|2)
 #define ACT_SPRSETANGLE		(((EVENTS_EXTBASE+8)<<8)|2)
 #define ACT_SPRLOADFRAME	(((EVENTS_EXTBASE+9)<<8)|2)
+#define ACTL_SPRLOADFRAME	(((EVENTS_EXTBASE+9)<<16)|2)
 #define EXP_GETRGBAT		(((EVENTS_EXTBASE+0)<<8)|2)
 #define EXP_GETSCALEX		(((EVENTS_EXTBASE+1)<<8)|2)
 #define EXP_GETSCALEY		(((EVENTS_EXTBASE+2)<<8)|2)
@@ -1849,19 +1884,35 @@ typedef	Movement	*	LPMOVEMENT;
 #define		PSOUNDFLAG_UNINTERRUPTABLE	0x0001
 #define		PSOUNDFLAG_BAD				0x0002
 
-typedef struct tagSSND {
+typedef struct tagSSNDA {
 	short	sndHandle;
 	short	sndFlags;
 	char	sndName[MAX_SOUNDNAME];
-	} SoundParam;
-typedef		SoundParam *		LPSND;
+	} SoundParamA;
+typedef struct tagSSNDW {
+	short	sndHandle;
+	short	sndFlags;
+	WCHAR	sndName[MAX_SOUNDNAME];
+	} SoundParamW;
+typedef		SoundParamA *		LPSNDA;
+typedef		SoundParamW *		LPSNDW;
 
 #define		PARAM_SAMPLE			6
-#define		PS_SAM					sizeof(SoundParam)
+#ifdef _UNICODE
+#define		PS_SAM					sizeof(SoundParamW)
+#define		LPSND LPSNDW
+#else
+#define		PS_SAM					sizeof(SoundParamA)
+#define		LPSND LPSNDA
+#endif
 
 // -------------------------------- Music
 #define		PARAM_MUSIC				7
-#define		PS_MUS					sizeof(SoundParam)
+#ifdef _UNICODE
+#define		PS_MUS					sizeof(SoundParamW)
+#else
+#define		PS_MUS					sizeof(SoundParamA)
+#endif
 
 
 // POSITION PARAM Structure 
@@ -2013,14 +2064,30 @@ typedef	ShootParam 	* 					LPSHT;
 
 // -------------------------------- External program
 #define		PARAM_PROGRAM			33
-typedef struct tagPRG {
+typedef struct tagPRGA {
 	short	prgFlags;				// Default flags
 	char	prgPath[_MAX_PATH];		// Name of the program
 	char	prgCommand[108];		// Command line
-	} prgParam;
-typedef		prgParam *			LPPRG;	
+	} prgParamA;
+typedef		prgParamA *			LPPRGA;	
+typedef struct tagPRGW {
+	short	prgFlags;				// Default flags
+	WCHAR	prgPath[_MAX_PATH];		// Name of the program
+	WCHAR	prgCommand[108];		// Command line
+	} prgParamW;
+typedef		prgParamW *			LPPRGW;	
+#define PS_PRGA sizeof(prgParamA)
+#define PS_PRGW sizeof(prgParamW)
+#ifdef _UNICODE
+#define prgParam prgParamW
+#define PS_PRG sizeof(prgParamW)
+#define LPPRG LPPRGW
+#else
+#define prgParam prgParamA
+#define PS_PRG sizeof(prgParamA)
+#define LPPRG LPPRGA
+#endif
 
-#define		PS_PRG					sizeof(prgParam)
 #define		PRGFLAGS_WAIT			0x0001                                                    
 #define		PRGFLAGS_HIDE			0x0002
 
@@ -2042,41 +2109,74 @@ typedef		prgParam *			LPPRG;
 #define		PARAM_CNDMUSIC			36
 // -------------------------------- Event editor remark
 #define		PARAM_REMARK			37
-typedef struct tagREM {
-	LOGFONTV1	remLogFont;				// Font 
+typedef struct tagREMA {
+	LOGFONTV1A	remLogFont;				// Font 
 	COLORREF	remColorFont;			// Text color
 	COLORREF	remColorBack;			// Background color
 	short		remAlign;				// Alignement flags
 	WORD		remTextId;				// Text number in the buffer
 	char		remStyle[40];			// Style
-	} paramRemark;
-#define		PS_REM				sizeof(paramRemark)
-typedef		paramRemark *		LPRMK;	
+	} paramRemarkA;
+typedef		paramRemarkA*		LPRMKA;	
+typedef struct tagREMW {
+	LOGFONTV1W	remLogFont;				// Font 
+	COLORREF	remColorFont;			// Text color
+	COLORREF	remColorBack;			// Background color
+	short		remAlign;				// Alignement flags
+	WORD		remTextId;				// Text number in the buffer
+	WCHAR		remStyle[40];			// Style
+	} paramRemarkW;
+typedef		paramRemarkW*		LPRMKW;	
+#ifdef _UNICODE
+#define PS_REM sizeof(paramRemarkW)
+#define LPRMK LPRMKW
+#else
+#define PS_REM sizeof(paramRemarkA)
+#define LPRMK LPRMKA
+#endif
 
 // -------------------------------- Group title
 #define		PARAM_GROUP				38
 #define		GROUP_MAXTITLE			80
 #define		GROUP_MAXPASSWORD		16
-typedef struct tagGRP {
+typedef struct tagGRPW {
+	short		grpFlags;					// Active / Unactive?
+	short		grpId;						// Group identifier
+	WCHAR		grpTitle[GROUP_MAXTITLE];	// Title
+	WCHAR		grpPassword[GROUP_MAXPASSWORD];		// Protection 
+	DWORD		grpChecksum;				// Checksum
+	} paramGroupW;
+typedef paramGroupW* LPGRPW;
+typedef struct tagGRPA {
 	short		grpFlags;					// Active / Unactive?
 	short		grpId;						// Group identifier
 	char		grpTitle[GROUP_MAXTITLE];	// Title
 	char		grpPassword[GROUP_MAXPASSWORD];		// Protection 
 	DWORD		grpChecksum;				// Checksum
-	} paramGroup;
-#define		PS_GRP				sizeof(paramGroup)
+	} paramGroupA;
+typedef paramGroupA* LPGRPA;
 typedef struct tagOLDGRP {
 	short		grpFlags;					
 	short		grpId;					
 	char		grpTitle[GROUP_MAXTITLE];
-	} paramOldGroup;
-#define		PS_OLDGRP			sizeof(paramOldGroup)
-typedef		paramGroup *		LPGRP;	
+	} paramGroupV0;
+#define PS_GRPA sizeof(paramGroupA)
+#define PS_GRPW sizeof(paramGroupW)
+#ifdef _UNICODE
+#define PS_GRP sizeof(paramGroupW)
+#define LPGRP LPGRPW
+#define GETEVPGRP(evpPtr) (LPGRPW)&evpPtr->evpW.evpW0
+#else
+#define PS_GRP sizeof(paramGroupA)
+#define LPGRP LPGRPA
+#define GETEVPGRP(evpPtr) (LPGRPA)&evpPtr->evpW.evpW0
+#endif
 
 #define		GRPFLAGS_INACTIVE		0x0001
 #define		GRPFLAGS_CLOSED			0x0002
 #define		GRPFLAGS_PARENTINACTIVE	0x0004
 #define		GRPFLAGS_GROUPINACTIVE	0x0008
+#define		GRPFLAGS_UNICODE		0x0010
 //#define		GRPFLAGS_FADEIN			0x0004
 //#define		GRPFLAGS_FADEOUT		0x0008
 #define		GRPFLAGS_GLOBAL			0x0010
@@ -2179,14 +2279,25 @@ typedef struct
 
 // -------------------------------- Movement number
 #define MAX_MVTNAME					32
-typedef struct tagMvtParam {
+typedef struct tagMvtParamA {
 	short	mvtNumber;
 	char	mvtName[MAX_MVTNAME];
-	} MvtParam;
-typedef		MvtParam *			LPMVTP;
+	} MvtParamA;
+typedef		MvtParamA *			LPMVTPA;
+typedef struct tagMvtParamW {
+	short	mvtNumber;
+	WCHAR	mvtName[MAX_MVTNAME];
+	} MvtParamW;
+typedef		MvtParamW *			LPMVTPW;
 
 #define		PARAM_MVT			57
-#define		PS_MVT				sizeof(MvtParam)
+#ifdef _UNICODE
+#define		PS_MVT				sizeof(MvtParamW)
+#define		LPMVTP LPMVTPW
+#else
+#define		PS_MVT				sizeof(MvtParamA)
+#define		LPMVTP LPMVTPA
+#endif
 
 // Access to renamed variables
 #define		PARAM_STRINGGLOBAL		58
@@ -2208,18 +2319,23 @@ typedef		prgParam2 *			LPPRG2;
 #define		PARAM_ALTSTRING_EXP		62
 #define		PS_ALTSTRING_EXP	 	PS_EXP
 
-// -------------------------------- A pointner to a filename, version 2
+// -------------------------------- A pointer to a filename, version 2
 #define		PARAM_FILENAME2			63
 #define		PS_FILEN				_MAX_PATH
 // B nom de fichier...
+
+// -------------------------------- The name of an effect
+#define		PARAM_EFFECT			64
+#define		PS_EFFECT				2
+// B name of the effect
 
 
 // STRUCTURE FOR FAST LOOPS
 ///////////////////////////////////////////////////////////////////////
 typedef struct tagFL
 {
-	LPSTR	next;
-	char	name[64];
+	LPTSTR	next;
+	TCHAR	name[64];
 	WORD	flags;
 	long	index;
 } FastLoop;
@@ -2412,7 +2528,21 @@ typedef struct
 	int value;
 	LPSTR pText;
 	int lText;
-} EditDebugInfo;
+} EditDebugInfoA;
+
+typedef struct
+{
+	LPWSTR pTitle;
+	int value;
+	LPWSTR pText;
+	int lText;
+} EditDebugInfoW;
+
+#ifdef _UNICODE
+#define EditDebugInfo EditDebugInfoW
+#else
+#define EditDebugInfo EditDebugInfoA
+#endif
 
 ///////////////////////////////////////////////////////////////////////
 //
@@ -2443,7 +2573,7 @@ typedef	objectsList *			LPOBL;
 #define		OBJECT_SIZE			256L
 #define		OBJECT_SHIFT		8
 #define		MAX_INTERMEDIATERESULTS		256
-#define		MAX_TEMPSTRINGS				256
+#define		STEP_TEMPSTRINGS	64
 
 typedef struct tagRH2 {
 	DWORD		rh2OldPlayer;				// Previous player entries
@@ -2635,21 +2765,24 @@ typedef struct tagRH4 {
 	DWORD		rh4SaveVersion;
 	event*		rh4ActionStart;							// Sauvergarde action courante
 	int			rh4PauseKey;
-	LPSTR		rh4CurrentFastLoop;
+	LPTSTR		rh4CurrentFastLoop;
 	int			rh4EndOfPause;
 	int		  	rh4EventCountOR;						// Number of the event for OR conditions
 	short		rh4ConditionsFalse;
 	short		rh4MouseWheelDelta;
 	int			rh4OnMouseWheel;
-	LPSTR		rh4PSaveFilename;
+	LPTSTR		rh4PSaveFilename;
 	UINT		rh4MusicHandle;
 	DWORD		rh4MusicFlags;
 	DWORD		rh4MusicLoops;
 	int			rh4LoadCount;
 	short		rh4DemoMode;
-	short		rh4Free4;
+	short		rh4SaveFrame;
 	CDemoRecord* rh4Demo;
-	char		rh4QuitString[52];						// FREE!!!! GREAT!
+	int			rh4SaveFrameCount;
+	double		rh4MvtTimerCoef;
+	char		rh4QuitString[40];						// FREE!!!! GREAT!
+
 
 	DWORD		rh4PickFlags0;							// 00-31
 	DWORD		rh4PickFlags1;							// 31-63
@@ -2659,9 +2792,9 @@ typedef struct tagRH4 {
 
 	short		rh4DroppedFlag;
 	short		rh4NDroppedFiles;
-	LPSTR		rh4DroppedFiles;
+	LPTSTR		rh4DroppedFiles;
 	LPFL		rh4FastLoops;
-	LPSTR		rh4CreationErrorMessages;
+	LPTSTR		rh4CreationErrorMessages;
 	CValue		rh4ExpValue1;							// New V2
 	CValue		rh4ExpValue2;
 
@@ -2689,7 +2822,7 @@ typedef struct tagRH4 {
 	BYTE		rh4CheckDoneInstart;		// Build92 to correct start of frame with fade in
 	BYTE		rh4Free0;
 	mv *		rh4Mv;						// Yves's data
-	DWORD		rh4Free1;					// String buffer position
+	HCURSOR		rh4OldCursor;				// Old cursor for Show / HideMouse in Vitalize! mode
 	headerObject*	rh4_2ndObject;	 		// Collision object address
 	short 		rh4_2ndObjectNumber;        // Number for collisions
 	short		rh4FirstQuickDisplay;		// Quick-display object list
@@ -2710,7 +2843,11 @@ typedef struct tagRH4 {
 	expression*	rh4ExpToken;							// Current position in expressions
 	CValue*		rh4Results[MAX_INTERMEDIATERESULTS];	// Result pile
 	long		rh4Operators[MAX_INTERMEDIATERESULTS];	// Operators pile
-	LPSTR		rh4PTempStrings[MAX_TEMPSTRINGS];		// Temporary string calculation positiion
+	
+	LPTSTR*		rh4PTempStrings;						// Debut zone 256 long
+	int			rh4MaxTempStrings;
+	long		rh4Free4[256-2];						// Free buffer
+
 	int			rh4NCurTempString;						// Pointer on the current string
 	DWORD		rh4FrameRateArray[MAX_FRAMERATE];		// Framerate calculation buffer
 	int			rh4FrameRatePos;						// Position in buffer
@@ -2791,7 +2928,7 @@ typedef struct RunHeader {
 	UINT		rhVBLObjet;					// For the objects
 	UINT		rhVBLOld;					// For the counter
 
-	int			free10;						
+	int			rhEventsSize;						
 	WORD		rhMT_VBLStep;   			// Path movement variables
 	WORD 		rhMT_VBLCount;
 	DWORD		rhMT_MoveStep;
@@ -2823,8 +2960,8 @@ typedef struct RunHeader {
 	LPDWORD		rhDestroyList;				// Destroy list address
 
 	int			rhDebuggerCommand;			// Current debugger command
-	char		rhDebuggerBuffer[DB_BUFFERSIZE];		// Code transmission buffer
-	char*		rhDbOldHO;
+	char		rhFree13[DB_BUFFERSIZE];		// Buffer libre!
+	LPVOID		rhDbOldHO;
 	WORD		rhDbOldId;
 	WORD		rhFree7;					
 
@@ -2877,13 +3014,12 @@ typedef struct headerObject {
 
 	int 	hoMark1;					// #of loop marker for the events
 	int 	hoMark2;
-	char*	hoMT_NodeName;				// Name fo the current node for path movements
+	LPTSTR	hoMT_NodeName;				// Name fo the current node for path movements
 
 	int		hoEventNumber;				// Number of the event called (for extensions)
 	int		hoFree2;
 	LPOC	hoCommon;					// Common structure address
 
-#ifdef HOX_INT
 	union
 	{
 	struct
@@ -2899,23 +3035,6 @@ typedef struct headerObject {
 			__int64 hoCalculYLong;
 		};
 	};
-#else
-	union
-	{
-	struct
-		{
-			short 	hoCalculX;					// Low weight value
-			short	hoX;          	      		// X coordinate
-			short	hoCalculY;					// Low weight value
-			short	hoY;						// Y coordinate
-		};
-	struct	
-		{
-			int hoCalculXLong;
-			int hoCalculYLong;
-		};
-	};
-#endif
 	int		hoImgXSpot;					// Hot spot of the current image
 	int		hoImgYSpot;
 	int		hoImgWidth;					// Width of the current picture
@@ -3013,7 +3132,7 @@ typedef struct tagRM {
 		int		MT_XStart;
 		int		MT_YStart;
 		int		MT_Pause;
-		char*	MT_GotoNode;
+		LPTSTR	MT_GotoNode;
 		};
 	struct
 		{
@@ -3137,7 +3256,7 @@ typedef struct tagRSPR {
 	int	 		rsCreaFlags;			// Creation flags
 	COLORREF	rsBackColor;			// background saving color
 	DWORD		rsEffect;				// Sprite effects
-	DWORD		rsEffectParam;
+	LPARAM		rsEffectParam;
 	WORD	 	rsFlags;				// Handling flags
 	WORD		rsFadeCreaFlags;		// Saved during a fadein
 	} rSpr;
@@ -3149,6 +3268,7 @@ typedef rSpr *	LPRSP;
 #define			RSFLAG_SCALE_RESAMPLE	0x0008	
 #define			RSFLAG_ROTATE_ANTIA		0x0010
 #define			RSFLAG_VISIBLE			0x0020
+#define			RSFLAG_CREATEDEFFECT	0x0040
 
 
 // ----------------------------------------
@@ -3159,7 +3279,7 @@ typedef struct tagRV {
 	long	rvFree1[VALUES_NUMBEROF_ALTERABLE-1];
 	long	rvValueFlags;
 	BYTE	rvFree2[VALUES_NUMBEROF_ALTERABLE];
-	LPSTR	rvStrings[STRINGS_NUMBEROF_ALTERABLE];
+	LPTSTR	rvStrings[STRINGS_NUMBEROF_ALTERABLE];
 	} rVal;
 typedef rVal *	LPRVAL;
 	
@@ -3299,8 +3419,8 @@ typedef	struct	tagRs {
 	short			rsOldFrame;			// Counter only 
 	BYTE			rsHidden;
 	BYTE			rsFree;
-	LPSTR			rsTextBuffer;		// Text buffer
-	int				rsLBuffer;			// Length of the buffer
+	LPTSTR			rsTextBuffer;		// Text buffer
+	int				rsLBuffer;			// Length of the buffer in BYTES
 	DWORD			rsFont;				// Temporary font for texts
 	union {
 		COLORREF	rsTextColor;		// Text color
@@ -3349,8 +3469,11 @@ typedef struct objInfoList {
 	HFII		oilHFII;				 // First available frameitem
 	COLORREF 	oilBackColor;			 // Background erasing color
 	short		oilQualifiers[MAX_QUALIFIERS];		// Qualifiers for this object
-	BYTE		oilName[24];	 		// Name	
+	TCHAR		oilName[24];	 		 // Name	
 	int			oilEventCountOR;		 // Selection in a list of events with OR
+#ifdef HWABETA
+	OINUM*		oilColList;				// Liste de collisions sprites
+#endif
 #ifdef __cplusplus
 };
 #else
@@ -3480,7 +3603,7 @@ typedef short (WINAPI * CHANGERUNDATA_PROC)(LPHO, LPHO);
 typedef short (WINAPI * KILLBACKGROUND_PROC) (LPHO);
 typedef short (WINAPI * GETZONEINFO_PROC)(LPHO);
 typedef LPWORD (WINAPI * GETDEBUGTREE_PROC)(LPHO);
-typedef void (WINAPI * GETDEBUGITEM_PROC)(LPSTR, LPHO, int);
+typedef void (WINAPI * GETDEBUGITEM_PROC)(LPTSTR, LPHO, int);
 typedef void (WINAPI* EDITDEBUGITEM_PROC)(LPHO, int);
 typedef void (WINAPI* GETRUNOBJECTFONT_PROC)(LPHO, LOGFONT*);
 typedef void (WINAPI* SETRUNOBJECTFONT_PROC)(LPHO, LOGFONT*, RECT*);
@@ -3490,6 +3613,7 @@ typedef short (WINAPI * GETRUNOBJECTWINDOW_PROC)(LPHO);
 typedef sMask* (WINAPI * GETRUNOBJECTCOLLISIONMASK_PROC)(LPHO, LPARAM);
 typedef BOOL (WINAPI * SAVERUNOBJECT_PROC)(LPHO, HANDLE);
 typedef BOOL (WINAPI * LOADRUNOBJECT_PROC)(LPHO, HANDLE);
+typedef void (WINAPI * GETRUNOBJECTMEMORYUSAGE_PROC)(LPHO, int*, int*, int*);
 
 #ifdef __cplusplus
 class kpj {
@@ -3525,6 +3649,8 @@ typedef struct kpj {
 	GETRUNOBJECTCOLLISIONMASK_PROC	GetRunObjectCollisionMask;
 	SAVERUNOBJECT_PROC				SaveRunObject;
 	LOADRUNOBJECT_PROC				LoadRunObject;
+	GETRUNOBJECTMEMORYUSAGE_PROC	GetRunObjectMemoryUsage;
+
 	kpxRunInfos	infos;   
 	
 #ifdef __cplusplus
